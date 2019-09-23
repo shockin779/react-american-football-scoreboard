@@ -1,5 +1,5 @@
 //TODO: STEP 1 - Import the useState hook.
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import React from "react";
 import "./App.css";
 import BottomRow from "./BottomRow";
@@ -10,11 +10,26 @@ function App() {
   const [awayScore, setAwayScore] = useState(0);
   const [quarter, setQuarter] = useState(1);
   const [quarterButtonText, setQuarterText] = useState('Next Quarter');
+  const [timerSeconds, setTimerSeconds] = useState(0);
+  const [timerMinutes, setTimerMinutes] = useState(0);
+
+  setTimeout(() => timer(), 1000)
 
   function resetGame() {
     setQuarter(1);
     setHomeScore(0);
     setAwayScore(0);
+    setTimerSeconds(0);
+    setTimerMinutes(0);
+  }
+
+  function timer() {
+    if(timerSeconds >= 59) {
+      setTimerMinutes(timerMinutes + 1);
+      setTimerSeconds(0)
+    } else {
+      setTimerSeconds(timerSeconds + 1);
+    }
   }
 
   return (
@@ -28,7 +43,7 @@ function App() {
 
             <div className="home__score">{homeScore}</div>
           </div>
-          <div className="timer">00:03</div>
+          <div className="timer">{timerMinutes}:{timerSeconds}</div>
           <div className="away">
             <h2 className="away__name">Tigers</h2>
             <div className="away__score">{awayScore}</div>
